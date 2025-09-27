@@ -1,7 +1,5 @@
 # Home Manager config
 
----
-
 ## Usefull commands
 
 ### 1. Declare a dotfile
