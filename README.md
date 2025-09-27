@@ -19,5 +19,5 @@ nix run home-manager/master -- switch --flake .#reksa@panasonic
 ### 3. Update Dependencies
 ```bash
 nix flake update
-home-manager switch --flake .#reksa@panasonic
+nix run home-manager/master -- switch --flake .#reksa@panasonic
 ```

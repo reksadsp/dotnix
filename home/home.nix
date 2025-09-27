@@ -1,6 +1,9 @@
 { config, pkgs, ... }:
 
 {
+  home.username = "reksa";
+  home.homeDirectory = "/home/reksa";
+
   nixpkgs.config.allowUnfree = true;
 
   home.packages = with pkgs; [

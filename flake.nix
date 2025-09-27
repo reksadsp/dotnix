@@ -1,5 +1,5 @@
 {
-  description = "Config Nix flake (Arch Omarchy) avec Home Manager";
+  description = "Config Nix flake (Arch Omarchy) with Home Manager";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
