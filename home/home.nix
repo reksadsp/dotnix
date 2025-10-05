@@ -18,12 +18,20 @@
     userName = "reksadsp";
     userEmail = "accounts@reksa.fr";
 
-  extraConfig = ''
-    [credential "https://github.com"]
-      helper = store
-    [credential "https://gitlab.com"]
-      helper = store
+  programs.ssh = {
+  startAgent = true;
+  keys = [
+    {
+      privateKey = "/home/reksa/.ssh/id_ed25519_gitlab";
+      publicKey  = "/home/reksa/.ssh/id_ed25519_gitlab.pub";
+    }
+  ];
+
+  config = ''
+    Host gitlab.com
+      IdentityFile ~/.ssh/id_ed25519_gitlab
+      IdentitiesOnly yes
   '';
-  };
+};
 }
 
