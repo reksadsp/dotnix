@@ -17,6 +17,7 @@
     enable = true;
     userName = "reksadsp";
     userEmail = "accounts@reksa.fr";
+  };
 
   programs.ssh = {
   startAgent = true;
@@ -32,6 +33,7 @@
       IdentityFile ~/.ssh/id_ed25519_gitlab
       IdentitiesOnly yes
   '';
-};
+
+  };
 }
 
