@@ -21,19 +21,28 @@
 
   programs.ssh = {
   startAgent = true;
+ 
   keys = [
     {
       privateKey = "/home/reksa/.ssh/id_ed25519_gitlab";
       publicKey  = "/home/reksa/.ssh/id_ed25519_gitlab.pub";
     }
+    {
+      privateKey = "/home/reksa/.ssh/id_ed25519_github";
+      publicKey  = "/home/reksa/.ssh/id_ed25519_github.pub";
+    }
   ];
 
-  config = ''
+  # Custom SSH config entries go here
+  extraConfig = ''
     Host gitlab.com
       IdentityFile ~/.ssh/id_ed25519_gitlab
       IdentitiesOnly yes
-  '';
 
+    Host github.com
+      IdentityFile ~/.ssh/id_ed25519_github
+      IdentitiesOnly yes
+  '';
   };
 }
 
