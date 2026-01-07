@@ -1,20 +1,50 @@
 {
-  description = "Config Nix flake (Arch Omarchy) with Home Manager";
+  description = "Config Nix flake with Home Manager (Linux + macOS)";
 
-  inputs = { 
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05"; 
-    home-manager.url = "github:nix-community/home-manager/release-24.05"; 
-    home-manager.inputs.nixpkgs.follows = "nixpkgs"; 
-  }; 
+  inputs = {
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-  outputs = { self, nixpkgs, home-manager, ... }: 
- 
-  let system = "x86_64-linux"; 
-    pkgs = import nixpkgs { inherit system; }; 
-    in { 
-      homeConfigurations."reksa@panasonic" = home-manager.lib.homeManagerConfiguration { 
-      inherit pkgs; 
-      modules = [ ./home/home.nix ]; 
-    }; 
-  }; 
-}
+    # Use master for Home Manager (latest) for nixpkgs >= 25
+    home-manager.url = "github:nix-community/home-manager/master";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
+  };
+
+  outputs = { self, nixpkgs-stable, nixpkgs-unstable, home-manager, ... }:
+
+  let
+    mkHome = { system, username, homeDirectory, modules, pkgsOverride ? null }: 
+      home-manager.lib.homeManagerConfiguration {
+        pkgs = if pkgsOverride == null then import nixpkgs-stable { inherit system; }
+               else pkgsOverride;
+
+        modules = modules ++ [
+          {
+            home.username = username;
+            home.homeDirectory = homeDirectory;
+          }
+        ];
+      };
+  in
+  {
+    homeConfigurations = {
+      # Linux config
+      "reksa@panasonic" = mkHome {
+        system = "x86_64-linux";
+        username = "reksa";
+        homeDirectory = "/home/reksa";
+        modules = [ ./home/linux.nix ];
+      };
+
+      # macOS config with unstable Neovim
+      "reksa@macos" = mkHome {
+        system = "aarch64-darwin";
+        username = "reksa";
+        homeDirectory = "/Users/reksa";
+        modules = [ ./home/macos.nix ];
+        pkgsOverride = import nixpkgs-unstable { system = "aarch64-darwin"; };
+      };
+    };
+  };
+} 
+
