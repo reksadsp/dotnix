@@ -32,13 +32,13 @@
         system = "x86_64-linux";
         username = "reksa";
         homeDirectory = "/home/reksa";
-        modules = [ ./home/linux.nix ];
+        modules = [ ./home/omarchy.nix ];
       };
       "root@stm32mp1-e1-96-2e" = mkHome {
         system "armv7l-linux";
         username = "weston"
         homeDirectory = "/home/weston";
-        modules = [ ./home/starter.nix];
+        modules = [ ./home/yocto.nix];
       };
 
       # macOS config with unstable Neovim
