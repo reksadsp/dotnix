@@ -2,11 +2,9 @@
   description = "Config Nix flake with Home Manager (Linux + macOS)";
 
   inputs = {
-<<<<<<< HEAD
+    # Use master for Home Manager (latest) for nixpkgs >= 25
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-
-    # Use master for Home Manager (latest) for nixpkgs >= 25
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
@@ -29,12 +27,18 @@
   in
   {
     homeConfigurations = {
-      # Linux config
+      # Linux configs
       "reksa@panasonic" = mkHome {
         system = "x86_64-linux";
         username = "reksa";
         homeDirectory = "/home/reksa";
         modules = [ ./home/linux.nix ];
+      };
+      "root@stm32mp1-e1-96-2e" = mkHome {
+        system "armv7l-linux";
+        username = "weston"
+        homeDirectory = "/home/weston";
+        modules = [ ./home/starter.nix];
       };
 
       # macOS config with unstable Neovim
@@ -47,23 +51,4 @@
       };
     };
   };
-} 
-
-=======
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
-    home-manager.url = "github:nix-community/home-manager/release-24.05";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-  };
-
-  outputs = { self, nixpkgs, home-manager, ... }:
- 
-  let system = "x86_64-linux";
-    pkgs = import nixpkgs { inherit system; };
-    in {
-      homeConfigurations."reksa@panasonic" = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      modules = [ ./home/home.nix ];
-    };
-  };
 }
->>>>>>> 0148107 (clean systemd ngrok WIP)
