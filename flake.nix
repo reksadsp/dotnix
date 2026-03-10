@@ -36,11 +36,10 @@
       };
       "root@stm32mp1-e1-96-2e" = mkHome {
         system "armv7l-linux";
-        username = "weston"
-        homeDirectory = "/home/weston";
-        modules = [ ./home/yocto.nix];
+        username = "root"
+        homeDirectory = "/home/root";
+        modules = [ ./home/buildroot.nix];
       };
-
       # macOS config with unstable Neovim
       "reksa@macos" = mkHome {
         system = "aarch64-darwin";
