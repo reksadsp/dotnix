@@ -3,15 +3,11 @@
 {
   home.username = "reksa";
   home.homeDirectory = "/home/reksa";
-<<<<<<< HEAD:home/linux.nix
   home.stateVersion = "25.11";
-
-=======
-  home.stateVersion = "24.05";
->>>>>>> 0148107 (clean systemd ngrok WIP):home/home.nix
   nixpkgs.config.allowUnfree = true;
   home.packages = with pkgs; [
     unzip
+    nmap
     ngrok
     sshfs
     btop
@@ -23,6 +19,7 @@
     bat
     wget
     ripgrep
+    steam
     parsec-bin
   ];
   programs.ssh.enable = true;
